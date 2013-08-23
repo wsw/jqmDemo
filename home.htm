@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>jQuery Mobile Twitter Bootstrap Theme</title>
+		<link rel="stylesheet" href="themes/Bootstrap.css">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile.structure-1.1.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+		<link rel="stylesheet" href="iscroll/scrollbar.css">
+		<script type="text/javascript" src="iscroll/iscroll.js"></script>
+		<style>
+			#scroller ul {
+				position:relative;
+				list-style:none;
+				padding:0;
+				margin:0;
+				width:100%;
+				text-align:left;
+			}
+
+			#scroller li {
+				padding:0 5px;
+				height:40px;
+				line-height:40px;
+				border-bottom:1px solid #ccc;
+				border-top:1px solid #fff;
+				background-color:#fafafa;
+				font-size:14px;
+				color:black;
+			}
+
+			#scroller li > a {
+				display:block;
+				font-weight: normal;
+				color:black;
+			}
+		</style>
+</head>
+<body>
+	<div data-role="page" data-theme="a" id="home">  <!-- 第一个页面 -->
+		<div data-role="header" data-theme="b" data-position="fixed" data-id="myheader" data-tap-toggle="false">
+			<a href="#" data-icon="delete">关闭</a>
+			<h1>bootstrap</h1>
+		</div>
+		<div data-role="content" id="home_content">
+			<ul data-role="listview">
+				<li><a href="#" data-id="1">星期一</a></li>
+				<li><a href="#" data-id="2">星期二</a></li>
+				<li><a href="#" data-id="3">星期三</a></li>
+				<li><a href="#" data-id="4">星期四</a></li>
+				<li><a href="#" data-id="5">星期五</a></li>
+			</ul>
+		</div>
+		<div data-role="footer" data-position="fixed" data-id="myfooter" data-theme="f" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					<li><a href="#" data-icon="star"></a></li>
+					<li><a href="#" data-icon="info"></a></li>
+					<li><a href="#" data-icon="refresh"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" id="list">    <!-- 第二个页面 -->
+		<div data-role="header" data-theme="b" data-position="fixed" data-id="myheader" data-tap-toggle="false">
+			<a href="#home" data-icon="home">主页</a>
+			<h1></h1>
+		</div>
+		<div data-role="content" style="margin:0; padding:3px; postion:relative">	
+		</div>
+		<div id="wrapper" style="position: absolute;width: 100%; overflow: hidden; z-index: 1; top: 50px; bottom: 0;">
+			<div id="scroller">
+				<ul data-role="none" id="listData" data-filter="true">
+						
+				</ul>
+				<div id="pullUp">
+					<span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
+				</div>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed" data-id="myfooter" data-theme="f" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					<li><a href="#" data-icon="star"></a></li>
+					<li><a href="#" data-icon="info"></a></li>
+					<li><a href="#" data-icon="refresh"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" id="content">    <!-- 第三个页面 -->
+		<div data-role="header" data-theme="b" data-position="fixed" data-id="myheader" data-tap-toggle="false">
+			<a href="#" data-icon="home" data-rel="back">返回</a>
+			<h1></h1>
+		</div>
+		<div data-role="content" id="content_content">
+			<h2></h2>
+			<p></p>
+		</div>
+		<div data-role="footer" data-position="fixed" data-id="myfooter" data-theme="f" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					<li><a href="#" data-icon="star"></a></li>
+					<li><a href="#" data-icon="info"></a></li>
+					<li><a href="#" data-icon="refresh"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+  <script type="text/javascript">
+		
+
+		(function($){
+
+			var page = {pageNum:1, pageSize: 7};
+
+			handleEvent(location.hash);
+
+			function getUrlParam(string) {                       //地址解析
+				var obj =  new Array();  
+				if (string.indexOf("?") != -1) {  
+					var string = string.substr(string.indexOf("?") + 1); 
+					var strs = string.split("&");  
+					for(var i = 0; i < strs.length; i ++) {  
+						var tempArr = strs[i].split("=");  
+						obj[i] = tempArr[1];
+					}  
+				}  
+				return obj;  
+			}
+
+			function handleEvent(hashUrl){                       //刷新处理事件
+				var urlParam = getUrlParam(hashUrl);
+				if (!!urlParam[0]) {
+					var urlType = hashUrl.substr(hashUrl.indexOf("#")+1, hashUrl.indexOf("?")-1);
+					if ("list" == urlType) {
+						getListData(urlParam[0], 0, page.pageSize);
+						getTitleById(urlParam[0]);
+					}
+					else if ("content" == urlType && !!urlParam[1]) {
+						getListData(urlParam[1], 0, page.pageSize);
+						getTitleById(urlParam[1]);
+						getContentData(urlParam[0], urlParam[1]);
+					}
+					
+				}
+			}
+
+			function getTitleById(id) {
+				$("#home_content ul li a").each(function(){
+					if ($(this).attr("data-id") == id) {
+						$("#list>div>h1").html($(this).text()).attr("data-id", id);
+					    $("#content>div>h1").html($(this).text()).attr("data-id", id);
+					}
+				})
+			}
+
+			function getListData(id,start,end){                       
+				var i, l, info = "";
+				for (i = start; i < end; i++) {
+					info += "<li><a data-id='"+i+"'>TO DO "+ i+"</a></li>";
+				};
+				$("#listData").append(info);
+				myScroll && myScroll.refresh();
+			}
+
+			function getContentData(id, cateId){
+				$("#content_content h2").html("今天是"+$("#content>div>h1").html());
+				$("#content_content p").html("TO DO "+id);
+			}
+
+			$("#home_content").click(function(e){                //跳转到列表页面
+				var urlId = $(e.target).attr("data-id");
+				if (!!urlId){
+				 	location.hash = "#list?id="+urlId;
+					
+					var title = $(e.target).text();
+					$("#list>div>h1").html(title).attr("data-id", urlId);
+					$("#content>div>h1").html(title).attr("data-id", urlId);
+
+					$("#listData").html("");
+					page.pageNum = 1;
+					getListData(urlId, 0, page.pageSize);
+				}
+			})
+
+			$("#listData").live("click", function(e){            //跳转到内容页面
+				var cateId = $("#list>div>h1").attr("data-id");
+				var dataId = $(e.target).attr("data-id");
+
+				if (!!dataId) {
+					getContentData(dataId, cateId);
+					location.hash = "#content?id="+dataId + "&cate="+cateId;	
+				}
+			})
+
+			$('#content').bind("swiperight",function(){          //页面切换效果
+				window.history.back();
+				
+			});
+
+			$('#list').bind("swiperight",function(){            //页面切换效果
+				//window.history.back();
+				$.mobile.changePage("#home", {transition:"slidedown"})
+			});
+		
+			var myScroll, pullDownEl, pullDownOffset,
+	                pullUpEl, pullUpOffset, generatedCount = 0;
+			/**
+	         * 滚动翻页 （自定义实现此方法）
+	         * myScroll.refresh();		// 数据加载完成后，调用界面更新方法
+	         */
+
+	        function pullUpAction () {
+	            setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+	                var id = $("#content>div>h1").attr("data-id");
+
+	                getListData(id, (page.pageNum++)*page.pageSize, page.pageSize*page.pageNum);
+	                //$("listData").listview("refresh");
+	                // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+	                
+	            }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+	        }
+
+	        /**
+	         * 初始化iScroll控件
+	         */
+	        function loaded() {
+	            if(myScroll != null){
+	                myScroll.destroy();
+	            }
+	            pullUpEl = document.getElementById('pullUp');
+	            pullUpOffset = pullUpEl.offsetHeight;
+
+	            myScroll = new iScroll('wrapper', {
+	                scrollbarClass: 'myScrollbar', /* 重要样式 */
+	                useTransition: false, /* 此属性不知用意，本人从true改为false */
+	                topOffset: pullDownOffset,
+	                onRefresh: function (){
+	                    if (pullUpEl.className.match('loading')) {
+	                        pullUpEl.className = '';
+	                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+	                    }
+	                },
+	                onScrollMove: function () {
+	                    if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+	                        pullUpEl.className = 'flip';
+	                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
+	                        this.maxScrollY = this.maxScrollY;
+	                    } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+	                        pullUpEl.className = '';
+	                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+	                        this.maxScrollY = pullUpOffset;
+	                    }
+	                },
+	                onScrollEnd: function () {
+	                    if (pullUpEl.className.match('flip')) {
+	                        pullUpEl.className = 'loading';
+	                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+	                        pullUpAction();	// Execute custom function (ajax call?)
+	                    }
+	                } ,
+	                onBeforeScrollStart: function(e) {
+	                     var target = e.target;
+	                     while (target.nodeType != 1) target = target.parentNode;
+	                     if (target.tagName != 'SELECT' && target.tagName != 'INPUT') {
+	                         e.preventDefault();
+	                     }
+	                }
+
+	            });
+
+	            setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+	        }
+
+	        document.addEventListener('DOMContentLoaded', loaded, false);
+
+		})(jQuery)
+
+		
+		
+
+	</script>
+</head>    

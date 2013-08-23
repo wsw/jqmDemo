@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	<style>
+		
+	</style>
+</header>
+<body>
+	<div data-role="page">
+		<div data-role="header">
+			<h1>主题化</h1>
+		</div>
+		<div data-role="content"> 		
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>Login</h3>
+				<form action="" method="post">
+					<label for="username">Username</label>
+						<input type="text" name="username" id="username" />
+						<label for="username">Password</label>
+						<input type="password" name="password" id="password" />
+					<fieldset class="ui-grid-a">
+						<div class="ui-block-a">
+							<button type="reset" data-inline="true">Reset</button>
+						</div>
+						<div class="ui-block-b">
+							<button type="submit" data-inline="true" data-theme="f">Submit</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<ul data-role="listview" style="margin-top:10px;">
+				<li><a href="#">first</a></li>
+				<li><a href="#">second</a></li>
+				<li><a href="#">three</a></li>
+			</ul>
+		</div>
+		
+		<div data-role="footer">
+			<h1>底部</h1>
+		</div>
+	</div>
+</body>
+</html>

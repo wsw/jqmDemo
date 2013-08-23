@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	<style>
+		.ui-body-f {
+			background-color: #cfe8cc;
+			font-family: "Lucida Sans Unicode", "Lucida Grande", Arial, sans-serif;
+		}
+		.ui-body-f input[type="text"], 
+		.ui-body-f input[type="password"] {
+			background-color: #ccc;
+		} 
+		.ui-bar-f {
+			padding: 10px 0px;
+			background-color: #069;
+			border-bottom: 2px solid #036;
+			color: #fff;
+		}
+		.ui-bar-g {
+			margin-top: 20px;
+			padding: 10px 0;
+			color: #fff;
+			border-bottom: 2px solid #000;
+			background-color: #000;
+			background: -webkit-linear-gradient(top, rgba(204,204,204,1) 0%,
+			rgba(0,0,0,0.65) 100%);
+			background: linear-gradient(top, rgba(204,204,204,1) 0%,rgba(0,0,0,0.65) 100%); 
+		}
+		.ui-body-f .ui-collapsible-contain 
+		.ui-collapsible-heading .ui-btn-up-f {
+			background: #666;
+			color: #fff;
+			text-decoration: none;
+		}
+		.ui-body-f .ui-collapsible-contain 
+		.ui-collapsible-heading .ui-btn-down-f, 
+		.ui-body-f .ui-collapsible-contain 
+		.ui-collapsible-heading .ui-btn-hover-f {
+			background: #999;
+			color: #fff;
+			text-decoration: none;
+		}
+		.ui-listview .ui-btn-up-f a {
+			color:#fff;
+		}
+		.ui-listview .ui-btn-down-f a, 
+		.ui-listview .ui-btn-hover-f a {
+			color: red;
+		}
+		.ui-btn-up-h {
+			background: -webkit-linear-gradient(top, rgba(57,107,158,1) 0%,
+			rgba(78,137,197,0.65) 100%); 
+			text-shadow: #225377 0px -1px 1px;
+			background: linear-gradient(top, rgba(57,107,158,1) 0%,rgba(78,137,197,0.65) 100%); 
+			color: #fff;
+		}
+		.ui-btn-down-h, 
+		.ui-btn-hover-h {
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,
+			rgba(114,176,212,1)), color-stop(100%,rgba(75,136,182,0.65))); 
+			background: linear-gradient(top, rgba(114,176,212,1) 0%,rgba(75,136,182,0.65) 100%); 
+			border: 1px solid #00516E;
+			text-shadow: #014D68 0px -1px 1px;
+			color: #fff;
+		}
+	</style>
+</header>
+<body>
+	<div data-role="page" data-theme="f">
+		<div data-role="header" data-theme="f">
+			<h1>主题化</h1>
+		</div>
+		<div data-role="content"> 		
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>Login</h3>
+				<form action="" method="post">
+					<label for="username">Username</label>
+						<input type="text" name="username" id="username" />
+						<label for="username">Password</label>
+						<input type="password" name="password" id="password" />
+					<fieldset class="ui-grid-a" >
+						<div class="ui-block-a">
+							<button type="reset" data-inline="true">Reset</button>
+						</div>
+						<div class="ui-block-b">
+							<button type="submit" data-inline="true" data-theme="h">Submit</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<ul data-role="listview" data-theme="f" style="margin-top:10px;">
+				<li><a href="#">first</a></li>
+				<li><a href="#">second</a></li>
+				<li><a href="#">three</a></li>
+			</ul>
+		</div>
+		
+		<div data-role="footer" data-theme="g">
+			<h1>底部</h1>
+		</div>
+	</div>
+</body>
+</html>
